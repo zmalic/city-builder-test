@@ -1,4 +1,4 @@
-# city-builder-test-setup
+# Test assessment for Unity candidates
 
 *Test project for applicants:*
 Requires Unity 2018.3.0f2 or higher (in older ones some models can be broken)
