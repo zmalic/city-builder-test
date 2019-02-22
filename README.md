@@ -2,6 +2,8 @@
 
 *Test project for applicants:*
 
+Please, don't spend more than 5-6 hours on it.
+
 Goal:
 Implement a simple city builder with these set of features:
 * Regular mode: in which player can choose building and see its stats on top of it (like name of the building and its size)
@@ -14,4 +16,5 @@ Implement a simple city builder with these set of features:
 Resources: 
 * Set of prefabs of buildings with different grid sizes
 * Simple grid shader
-* Test scene with a grid 
+* Test scene with a grid and a few prefabs placed.
+* Test buttons to switch between build and regular modes
