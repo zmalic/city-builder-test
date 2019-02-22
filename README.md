@@ -4,13 +4,17 @@
 Requires Unity 2018.3.0f2 or higher (in older ones some models can be broken)
 
 **Goal:**
-Implement a simple city builder where you can place and move the building and produce resources from these buildings.
+Implement a simple city builder where you can place and move buildings and produce resources from these buildings.
 
-Desired set of features:
+* Please, don't spend more than 6-8 hours on it.
+* Please, concentrate on data structures, separation of concerns and architecture  of the game. UX, usability and prettines are not important at all.
+* If you didn't implement all features - it's fine, feature's list is pretty big. Main goal for us is to see an architecture behind.
+
+**Desired set of features:**
 
 The game should have two main modes:
-* Regular mode: in which player can select a building by clicking on it and see a building name on top of it and current production progress (or can start a new production if no production is running)
-* Build mode: the player can place a new building or move an existing building 
+* **Regular mode:** in which player can select a building by clicking on it and see a building name on top of it and current production progress (or can start a new production if no production is running)
+* **Build mode:** the player can place a new building or move an existing building 
 when player presses 'build mode' he should see a simple list with building's names and their prices where he can choose a new building to place.
 Or the player can either select and move an existing building on the grid.
 
@@ -30,15 +34,12 @@ Placing a building cost 150 gold and 100 wood
 
 * Player should also be able to select a building in the regular mode by clicking on it and see a simple progressbar of current production progress. 
 
-*OPTIONAL* 2 Types of decoration buildings:
+*OPTIONAL*: 2 Types of decoration buildings:
 * 'Bench' - a simple bench decoration which player can place.
 Placing cost 150 gold and 50 steel
 * 'Tree' - a simple decoration which player can place.  
 Placing cost 50 gold and 200 wood
 
-**Additional notes**
-* Please, don't spend more than 6 hours on it.
-* Please, concentrate on data structures, architecture ahd a separation model part from view part of the game. UX, usability and prettines are not important at all.
 
 *Included Resources:*
 * Set of prefabs of buildings with different grid sizes
