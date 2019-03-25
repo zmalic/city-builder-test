@@ -9,6 +9,7 @@ Implement a simple city builder where you can place and move buildings and produ
 * Please, don't spend more than 6-8 hours on it.
 * Please, concentrate on data structures, separation of concerns and architecture  of the game. UX, usability and prettines are not important at all.
 * If you didn't implement all features - it's fine, feature's list is pretty big. Main goal for us is to see an architecture behind.
+* In the end, please, provide a description explaning why you did this task the way you did (why did you choose certain architecture, UI management, data structures, etc) and what would you do differently if you would have more time. 
 
 **Desired set of features:**
 
