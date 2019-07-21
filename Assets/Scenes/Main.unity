@@ -733,7 +733,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
-    - _GridSize: 11
+    - _GridSize: 20
     - _LineSize: 0.075
     - _Metallic: 0
     - _Mode: 0
@@ -948,9 +948,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resources:
   - resourceType: 1
-    amount: 300
+    amount: 500
   - resourceType: 2
-    amount: 300
+    amount: 500
   - resourceType: 3
     amount: 300
   buildings:
@@ -1462,7 +1462,7 @@ Transform:
   m_GameObject: {fileID: 1531067817}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 11, y: 1, z: 11}
+  m_LocalScale: {x: 20, y: 1, z: 20}
   m_Children: []
   m_Father: {fileID: 1537534217}
   m_RootOrder: 0
@@ -1546,7 +1546,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 55
+  orthographic size: 100
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1620,7 +1620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76404baef6b90404f9b8f451c5473a71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSize: 11
+  gridSize: 20
 --- !u!1 &1644117200
 GameObject:
   m_ObjectHideFlags: 0

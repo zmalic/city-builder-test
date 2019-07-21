@@ -9,7 +9,8 @@ public class Building : MonoBehaviour
     {
         Instantiated,
         Construction,
-        Ready
+        Ready,
+        Removing
     }
 
     public string description;
@@ -68,8 +69,15 @@ public class Building : MonoBehaviour
     public void Remove()
     {
         placeing = false;
+        _state = State.Removing;
         Destroy(gameObject);
     }
+
+    public bool Removing()
+    {
+        return _state == State.Removing;
+    }
+
     public void Construct()
     {
         GameManager.instance.resourcesManager.Buy(price);

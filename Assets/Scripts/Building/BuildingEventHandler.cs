@@ -49,7 +49,7 @@ public class BuildingEventHandler : MonoBehaviour, IPointerClickHandler, IBeginD
     {
         if (IsBuildMode())
         {
-            if (!_building.AddOnMap())
+            if (!_building.AddOnMap() && !_building.Removing())
             {
                 transform.position = _startPosition;
                 _building.AddOnMap();
