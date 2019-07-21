@@ -1,49 +1,74 @@
-# Test assessment for Unity candidates
+# City Builder test
 
-*Test project for applicants:*
-Requires Unity 2018.3.0f2 or higher (in older ones some models can be broken)
+### Architecture
 
-**Goal:**
-Implement a simple city builder where you can place and move buildings and produce resources from these buildings.
+The game architecture is composed of GameManager and another four components:
 
-* Please, don't spend more than 6-8 hours on it.
-* Please, concentrate on data structures, separation of concerns and architecture  of the game. UX, usability and prettines are not important at all.
-* If you didn't implement all features - it's fine, feature's list is pretty big. Main goal for us is to see an architecture behind.
-* In the end, please, provide a description explaning why you did this task the way you did (why did you choose certain architecture, UI management, data structures, etc) and what would you do differently if you would have more time. 
+* Building component
+* Map component
+* Resource component
+* UI component
 
-**Desired set of features:**
+**GameManager**
 
-The game should have two main modes:
-* **Regular mode:** in which player can select a building by clicking on it and see a building name on top of it and current production progress (or can start a new production if no production is running)
-* **Build mode:** the player can place a new building or move an existing building 
-when player presses 'build mode' he should see a simple list with building's names and their prices where he can choose a new building to place.
-Or the player can either select and move an existing building on the grid.
+`GameManager` is a singletone. It takes care of other game components.
+In the game manager we can set up starting amount of resources and the building types.
+From this component, we start the initialization of other game components.
 
-* Buildings should not be placeable on cells occupied by other buildings
-* Placing a building cost resources
-* When building is placed it should go through construction phase first (simple progressbar on top of the building) for 10 seconds before it can produce anything.
+**Building component**
 
-**Building types**
+This component is managed by a `BuildingManager` - takes care of buildings creation.
+Other classes from this components are `Building`, `BuildingEventHandler` and `BuildingUI`
+ * `Building` is main object of certain building
+ * `BuildingEventHandler` is a set of methods for building selection and movement 
+ * `BuildingUI` is a simply class for managing building world space UI
 
-3 Types of production buildings:
-* 'Residence' - a building which produces automatically 100 gold every 10 seconds. After production is finished, the next one starts automatically. 
-Placing a building cost 100 gold
-* 'Wood production building' - a building which player first have to select and press 'start production' (just a simple button which appears on top of the building when we select it) and after it should start producing 50 wood in 10 seconds.
-Placing a building cost 150 gold
-* 'Steel production building' - same as wood production but produces steel instead. Produces 50 steel in 10 seconds.
-Placing a building cost 150 gold and 100 wood
+**Map component**
 
-* Player should also be able to select a building in the regular mode by clicking on it and see a simple progressbar of current production progress. 
+This component is managed by a `MapManager`.
+Here we can to define the map size in edit mode, so we can use map from 8x8 to 20x20 fields.
+Also, there are set of functions for adding and removing buildings on the map (grid)
 
-*OPTIONAL*: 2 Types of decoration buildings:
-* 'Bench' - a simple bench decoration which player can place.
-Placing cost 150 gold and 50 steel
-* 'Tree' - a simple decoration which player can place.  
-Placing cost 50 gold and 200 wood
+In `Grid` class we keep the data on field occupancy in two dimensional bool array.
+`Grid` has methods for manipulation of these data.
+
+**Resource component**
+
+This component is managed by a `ResourcesManager`.
+The use of all resources is managed through this component.
+
+**UI component**
+
+This component is managed by a `UIManager` - manager for screen space canvas UI elements
+
+`BuildingBuyButton` is class for dynamically added buttons for buying a building. It is also part of the UI component.
 
 
-*Included Resources:*
-* Set of prefabs of buildings with different grid sizes
-* Simple grid shader
-* Test scene with a grid and a few prefabs placed.
-* Some base UI
+### Description
+
+I split the app on the components so that, for example, the building does not depend on the position to which it will be placed.
+
+For collision between buildings, I used a 2D bool array instead of using built-in coliders, so it is quickly possible to check whether the required part of the terrain is free or not.
+
+When the game is initialized, I use array of building prefabs from `GameManager` 
+to create buttons in UI Build mode panel.
+On this way we could just to add new prefab into GameManager's inspector 
+and game will dynamically add buttons in the menu.
+
+Creating of new type of building is pretty easy from existing prefabs.
+We just need to set up few parameters and a new model.
+
+In the edit mode, there is very easy to create different map sizes over
+unity inspector panel.
+
+Although not mentioned, I made the possibility of removing the building by 
+positioning out of the map (the building must be completely out of bounds of the map).
+
+### What would I do differently if I had more time?
+
+* I would simplify the methods for positioning in the `MapManager`.
+* I would not remove buildings (`building.Remove();`) from the MapManager class - this class is only for setting buildings on the map. I think it brakes the architecture.
+* Displaying building details, I would completely switch to `BuildingUI` instead of `Building`.
+* I would make the basic building class, and from it I would inherit the resource-building class, decoration-building etc.
+* Some common logic from `Building` i would switch to `BuildingManager`.
+* I would use the namespace for the components.
