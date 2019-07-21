@@ -733,7 +733,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
-    - _GridSize: 12
+    - _GridSize: 11
     - _LineSize: 0.075
     - _Metallic: 0
     - _Mode: 0
@@ -954,8 +954,11 @@ MonoBehaviour:
   - resourceType: 3
     amount: 300
   buildings:
-  - {fileID: 7054069203711894356, guid: fcaa9292c85be8f49bfc54a2f82ca251, type: 3}
   - {fileID: 5241099114786391146, guid: a68bc53c7b444c6468e9ecb71add9730, type: 3}
+  - {fileID: 5295849696307700985, guid: 8fc0dff1c34f7104b860d0691fffe5a7, type: 3}
+  - {fileID: 8309280376359967372, guid: 2ef01690c861b4248872f368cd90c0de, type: 3}
+  - {fileID: 4789629980534647943, guid: 1f9f25cbf1bffa3409afac6fc0dd6679, type: 3}
+  - {fileID: 7054069203711894356, guid: fcaa9292c85be8f49bfc54a2f82ca251, type: 3}
 --- !u!4 &994528837
 Transform:
   m_ObjectHideFlags: 0
@@ -1459,7 +1462,7 @@ Transform:
   m_GameObject: {fileID: 1531067817}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 12, y: 1, z: 12}
+  m_LocalScale: {x: 11, y: 1, z: 11}
   m_Children: []
   m_Father: {fileID: 1537534217}
   m_RootOrder: 0
@@ -1543,7 +1546,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 60
+  orthographic size: 55
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1617,7 +1620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76404baef6b90404f9b8f451c5473a71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSize: 12
+  gridSize: 11
 --- !u!1 &1644117200
 GameObject:
   m_ObjectHideFlags: 0

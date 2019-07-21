@@ -109,10 +109,4 @@ public class MapManager : MonoBehaviour
         buildingWorldPosition.z += offsetY;
         building.transform.position = buildingWorldPosition;
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(new Vector3(_startPosition.x, 0, _startPosition.y), 1);
-    }
 }

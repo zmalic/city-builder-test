@@ -91,9 +91,15 @@ public class Building : MonoBehaviour
         }
         _ui.constructionProgress.gameObject.SetActive(false);
         _state = State.Ready;
-        if (autoProduction && production.resourceType != ResourceType.None)
+        if (production.resourceType != ResourceType.None)
         {
-            StartCoroutine(StartProduction());
+            if(autoProduction)
+                StartCoroutine(StartProduction());
+            else
+            {
+                _ui.startProduction.gameObject.SetActive(true);
+                _ui.startProduction.onClick.AddListener(() => StartCoroutine(StartProduction()));
+            }
         }
     }
 
@@ -102,6 +108,7 @@ public class Building : MonoBehaviour
     IEnumerator StartProduction()
     {
         _ui.productionProgress.gameObject.SetActive(true);
+        _ui.startProduction.gameObject.SetActive(false);
         do
         {
             float productionBegining = Time.time;
@@ -117,6 +124,10 @@ public class Building : MonoBehaviour
         }
         while (autoProduction);
         _ui.productionProgress.gameObject.SetActive(false);
+        if(!autoProduction)
+        {
+            _ui.startProduction.gameObject.SetActive(true);
+        }
     }
 
     public void Select()
