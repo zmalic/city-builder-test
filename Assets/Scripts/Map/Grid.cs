@@ -5,6 +5,7 @@ using UnityEngine;
 public class Grid
 {
     private int _size;
+    // two dimensional bool array for storing info about grid usage
     private bool[,] _gridFields;
 
     public Grid(int size)
@@ -15,6 +16,12 @@ public class Grid
         _gridFields = new bool[_size, _size];
     }
 
+    /// <summary>
+    /// Adding object to grid
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="size"></param>
+    /// <returns></returns>
     public bool AddObject(Vector2Int position, Vector2Int size)
     {
         if (IsFree(position, size))
@@ -25,11 +32,22 @@ public class Grid
         return false;
     }
 
+    /// <summary>
+    /// Removing object from grid
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="size"></param>
     public void RemoveObject(Vector2Int position, Vector2Int size)
     {
         SetUsage(position, size, false);
     }
 
+    /// <summary>
+    /// Sets usage (true or false) on grid fields 
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="size"></param>
+    /// <param name="usage"></param>
     private void SetUsage(Vector2Int position, Vector2Int size, bool usage)
     {
         for (int i = position.x; i < position.x + size.x; i++)
@@ -41,6 +59,12 @@ public class Grid
         }
     }
 
+    /// <summary>
+    /// Checks whether the fields are free
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="size"></param>
+    /// <returns></returns>
     public bool IsFree(Vector2Int position, Vector2Int size)
     {
         if (OutOfBounds(position, size))

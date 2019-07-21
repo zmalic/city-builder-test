@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Simply class for managing buildings UI
+/// </summary>
 public class BuildingUI : MonoBehaviour
 {
     public GameObject selectedPanel;

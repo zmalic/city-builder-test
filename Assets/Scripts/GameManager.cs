@@ -9,7 +9,11 @@ public enum GameMode
     Build
 }
 
-
+/// <summary>
+/// Main manager where we can to set up game
+/// Game manager require Resourse and Building manager scripts
+/// GameManager has also references on UI and Map managers
+/// </summary>
 [RequireComponent(typeof(ResourcesManager))]
 [RequireComponent(typeof(BuildingManager))]
 public class GameManager : MonoBehaviour
@@ -27,14 +31,22 @@ public class GameManager : MonoBehaviour
     public GameMode gameMode { get; private set;}
 
 
-
+    /// <summary>
+    /// Singletone instance
+    /// we will use this event in UIManager
+    /// </summary>
     public static GameManager instance = null;
 
+    /// <summary>
+    /// Change mode event
+    /// </summary>
+    /// <param name="gameMode"></param>
     public delegate void OnGameModeChange(GameMode gameMode);
     public static event OnGameModeChange onGameModeChange;
 
     void Awake()
     {
+        // Singletone
         if (instance == null)
             instance = this;
 
@@ -43,12 +55,15 @@ public class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
+        // initialize
         InitGame();
     }
 
     void InitGame()
     {
         SetInstances();
+
+        // Init managers
         resourcesManager.Init();
         mapManager.Init();
         uiManager.Init();
@@ -56,6 +71,9 @@ public class GameManager : MonoBehaviour
         RegularMode();
     }
 
+    /// <summary>
+    /// Set references for all managers
+    /// </summary>
     private void SetInstances()
     {
         resourcesManager = GetComponent<ResourcesManager>();
@@ -64,12 +82,19 @@ public class GameManager : MonoBehaviour
         uiManager = transform.Find("/Canvas").gameObject.GetComponent<UIManager>();
     }
 
+
+    /// <summary>
+    /// Go to build mode
+    /// </summary>
     public void BuildMode()
     {
         gameMode = GameMode.Build;
         onGameModeChange?.Invoke(gameMode);
     }
 
+    /// <summary>
+    /// Go to regular mode
+    /// </summary>
     public void RegularMode()
     {
         gameMode = GameMode.Regular;

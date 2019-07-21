@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Takes care of buildings creation
+/// </summary>
 public class BuildingManager : MonoBehaviour
 {
     public void BuyBuilding(Building building)
@@ -17,7 +20,7 @@ public class BuildingManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("There are not enough resources");
+            Debug.Log("There is not enough resources");
         }
     }
 }

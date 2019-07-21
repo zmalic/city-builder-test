@@ -948,7 +948,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resources:
   - resourceType: 1
-    amount: 500
+    amount: 100
   - resourceType: 2
     amount: 500
   - resourceType: 3

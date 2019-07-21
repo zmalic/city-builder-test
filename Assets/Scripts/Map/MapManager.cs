@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+/// <summary>
+/// Here you can define map size (grid) in edit mode,
+/// also, there are set of functions for adding and removing buildings on the map (grid)
+/// </summary>
 [ExecuteInEditMode]
 public class MapManager : MonoBehaviour
 {
-    const int DEFAULT_GRID_SIZE = 12;
-
     [Range(8, 20)]
-    public int gridSize = DEFAULT_GRID_SIZE;
+    public int gridSize = 12;
 
     private int _oldGridSize;
     private Transform _mapPlaneTransform;
@@ -27,6 +29,7 @@ public class MapManager : MonoBehaviour
 #if UNITY_EDITOR
     void Update()
     {
+        // if you are in the play mode, force _oldGridSize
         if (EditorApplication.isPlaying)
         {
             gridSize = _oldGridSize;
@@ -35,6 +38,9 @@ public class MapManager : MonoBehaviour
 
         if(gridSize != _oldGridSize)
         {
+            // when in the edit mode we change grid size
+            // change pam plane scale, _GridSize parameter in map material
+            // and cameras ortographic size (because we want to see the whole map)
             _mapPlaneTransform.localScale = new Vector3(gridSize, 1, gridSize);
             _mapPlaneRenderer.sharedMaterial.SetInt("_GridSize", gridSize);
             Camera.main.orthographicSize = 5.0f * gridSize;
@@ -45,13 +51,18 @@ public class MapManager : MonoBehaviour
 
     public void Init()
     {
+        // Create Grid component for care of the grid tiles usages
         _grid = new Grid(gridSize);
         float extents = ((float)gridSize / 2.0f) * 10;
+        // 2D world coordinates of grids start position (XZ world)
         _startPosition = new Vector2(transform.position.x - extents, transform.position.z - extents);
-
-        //Debug.Log(WorldToGridPosition(transform.Find("/Bench").transform.position));
     }
 
+    /// <summary>
+    /// Transform 3D point from world space to 2D int point in grid space
+    /// </summary>
+    /// <param name="worldPosition"></param>
+    /// <returns></returns>
     private Vector2Int WorldToGridPosition(Vector3 worldPosition)
     {
         float x = worldPosition.x - _startPosition.x;
@@ -60,6 +71,11 @@ public class MapManager : MonoBehaviour
         return new Vector2Int(Mathf.FloorToInt(x/10), Mathf.FloorToInt(y/10));
     }
 
+    /// <summary>
+    /// Transform 2D int point from grid space to 3D world space point 
+    /// </summary>
+    /// <param name="gridPosition"></param>
+    /// <returns></returns>
     private Vector3 GridToWorldPosition(Vector2Int gridPosition)
     {
         Vector3 worldPosition = Vector3.zero;
@@ -68,6 +84,13 @@ public class MapManager : MonoBehaviour
         return worldPosition;
     }
 
+    /// <summary>
+    /// Set building to grid if it is possible and return true,
+    /// otherwise return false
+    /// Remove building if the building position is outside of the grid
+    /// </summary>
+    /// <param name="building"></param>
+    /// <returns></returns>
     public bool TryToSetBuilding(Building building)
     {
         Vector2Int gridPosition = GetGridPosition(building);
@@ -89,6 +112,11 @@ public class MapManager : MonoBehaviour
         _grid.RemoveObject(gridPosition, building.size);
     }
 
+    /// <summary>
+    /// Calculate 2D int grid position of the building
+    /// </summary>
+    /// <param name="building"></param>
+    /// <returns></returns>
     private Vector2Int GetGridPosition(Building building)
     {
         Vector3 buildingWorldPosition = building.transform.position;
@@ -100,6 +128,11 @@ public class MapManager : MonoBehaviour
         return WorldToGridPosition(buildingWorldPosition);
     }
 
+    /// <summary>
+    /// Move buildings transform to grid position
+    /// </summary>
+    /// <param name="building"></param>
+    /// <param name="gridPosition"></param>
     private void SetBuildingOnPosition(Building building, Vector2Int gridPosition)
     {
         Vector3 buildingWorldPosition = GridToWorldPosition(gridPosition);

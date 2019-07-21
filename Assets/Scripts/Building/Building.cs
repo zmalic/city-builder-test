@@ -5,6 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(BuildingUI))]
 public class Building : MonoBehaviour
 {
+    /// <summary>
+    /// Building states
+    /// </summary>
     public enum State
     {
         Instantiated,
@@ -30,6 +33,8 @@ public class Building : MonoBehaviour
         _ui = GetComponent<BuildingUI>();
         _state = State.Instantiated;
         _ui.description.text = description;
+
+        // After the building was created start placeing
         StartCoroutine(PlaceBuilding());
     }
 
@@ -37,6 +42,7 @@ public class Building : MonoBehaviour
     {
         placeing = true;
         Plane xzPlane = new Plane(Vector3.up, 0);
+        // move building on the mouse position until it is placed
         while (_state == State.Instantiated)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -49,6 +55,7 @@ public class Building : MonoBehaviour
             }
             if (Input.GetMouseButtonDown(0))
             {
+                // on left mouse click, if the building is placecesd on map start construction
                 if(AddOnMap())
                     Construct();
             }
@@ -82,10 +89,15 @@ public class Building : MonoBehaviour
     {
         GameManager.instance.resourcesManager.Buy(price);
         placeing = false;
+        // change state (after that coroutine PlaceBuilding will stop)
         _state = State.Construction;
         StartCoroutine(ConstructBuilding());
     }
 
+    /// <summary>
+    /// Start building construction (10 seconds)
+    /// </summary>
+    /// <returns></returns>
     IEnumerator ConstructBuilding()
     {
         float constructBegining = Time.time;
@@ -99,12 +111,15 @@ public class Building : MonoBehaviour
         }
         _ui.constructionProgress.gameObject.SetActive(false);
         _state = State.Ready;
+
+        // if the building can produce resources - set it up
         if (production.resourceType != ResourceType.None)
         {
             if(autoProduction)
                 StartCoroutine(StartProduction());
             else
             {
+                // if the building has manual resource production, set startProduction button listener
                 _ui.startProduction.gameObject.SetActive(true);
                 _ui.startProduction.onClick.AddListener(() => StartCoroutine(StartProduction()));
             }
@@ -112,7 +127,10 @@ public class Building : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// Starts building production (10s)
+    /// </summary>
+    /// <returns></returns>
     IEnumerator StartProduction()
     {
         _ui.productionProgress.gameObject.SetActive(true);
@@ -130,7 +148,7 @@ public class Building : MonoBehaviour
             yield return null;
             GameManager.instance.resourcesManager.Increase(production.resourceType, production.amount);
         }
-        while (autoProduction);
+        while (autoProduction);  // if autoProduction repeat forever
         _ui.productionProgress.gameObject.SetActive(false);
         if(!autoProduction)
         {
@@ -140,8 +158,10 @@ public class Building : MonoBehaviour
 
     public void Select()
     {
+        // if this building is selected, deselect it
         if (_selected != this)
         {
+            // if any building is selected, diselect it and select this building
             DeselectAll();
             _ui.selectedPanel.SetActive(true);
             _selected = this;
@@ -158,6 +178,7 @@ public class Building : MonoBehaviour
 
     public static void DeselectAll()
     {
+        // if there is selected building, deselect it
         _selected?.Deselect();
     }
 }
