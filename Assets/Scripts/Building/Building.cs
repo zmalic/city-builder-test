@@ -22,6 +22,7 @@ public class Building : MonoBehaviour
     private State _state;
 
     public static bool placeing = false;
+    private static Building _selected;
 
     void Awake()
     {
@@ -47,15 +48,21 @@ public class Building : MonoBehaviour
             }
             if (Input.GetMouseButtonDown(0))
             {
-                SetPosition();
+                if(AddOnMap())
+                    Construct();
             }
             yield return null;
         }
     }
 
-    private void SetPosition()
+    public bool AddOnMap()
     {
-        GameManager.instance.mapManager.TryToSetBuilding(this);
+        return GameManager.instance.mapManager.TryToSetBuilding(this);
+    }
+
+    public void RemoveFromMap()
+    {
+        GameManager.instance.mapManager.RemoveBuildingFromMap(this);
     }
 
     public void Remove()
@@ -110,5 +117,28 @@ public class Building : MonoBehaviour
         }
         while (autoProduction);
         _ui.productionProgress.gameObject.SetActive(false);
+    }
+
+    public void Select()
+    {
+        if (_selected != this)
+        {
+            DeselectAll();
+            _ui.selectedPanel.SetActive(true);
+            _selected = this;
+        }
+        else
+            Deselect();
+    }
+
+    public void Deselect()
+    {
+        _ui.selectedPanel.SetActive(false);
+        _selected = null;
+    }
+
+    public static void DeselectAll()
+    {
+        _selected?.Deselect();
     }
 }

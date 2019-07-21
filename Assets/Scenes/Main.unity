@@ -478,7 +478,6 @@ GameObject:
   - component: {fileID: 295828089}
   - component: {fileID: 295828088}
   - component: {fileID: 295828087}
-  - component: {fileID: 295828086}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -486,19 +485,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &295828086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 295828085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1997211142, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ForceModuleActive: 0
 --- !u!114 &295828087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1488,9 +1474,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1531196066}
   - component: {fileID: 1531196065}
-  - component: {fileID: 1531196064}
   - component: {fileID: 1531196063}
   - component: {fileID: 1531196062}
+  - component: {fileID: 1531196064}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1514,14 +1500,22 @@ Behaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1531196061}
   m_Enabled: 1
---- !u!92 &1531196064
-Behaviour:
+--- !u!114 &1531196064
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1531196061}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -768656878, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EventMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_MaxRayIntersections: 0
 --- !u!20 &1531196065
 Camera:
   m_ObjectHideFlags: 0

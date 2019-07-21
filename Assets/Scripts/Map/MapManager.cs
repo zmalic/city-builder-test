@@ -68,7 +68,28 @@ public class MapManager : MonoBehaviour
         return worldPosition;
     }
 
-    public void TryToSetBuilding(Building building)
+    public bool TryToSetBuilding(Building building)
+    {
+        Vector2Int gridPosition = GetGridPosition(building);
+        if(_grid.IsOutOfGrid(gridPosition, building.size))
+        {
+            building.Remove();
+        }
+        else if(_grid.AddObject(gridPosition, building.size))
+        {
+            SetBuildingOnPosition(building, gridPosition);
+            return true;
+        }
+        return false;
+    }
+
+    public void RemoveBuildingFromMap(Building building)
+    {
+        Vector2Int gridPosition = GetGridPosition(building);
+        _grid.RemoveObject(gridPosition, building.size);
+    }
+
+    private Vector2Int GetGridPosition(Building building)
     {
         Vector3 buildingWorldPosition = building.transform.position;
         float offsetX = ((float)(building.size.x - 1) / 2.0f) * 10;
@@ -76,19 +97,17 @@ public class MapManager : MonoBehaviour
         buildingWorldPosition.x -= offsetX;
         buildingWorldPosition.z -= offsetY;
 
-        Vector2Int gridPosition = WorldToGridPosition(buildingWorldPosition);
-        if(_grid.IsOutOfGrid(gridPosition, building.size))
-        {
-            building.Remove();
-        }
-        else if(_grid.AddObject(gridPosition, building.size))
-        {
-            buildingWorldPosition = GridToWorldPosition(gridPosition);
-            buildingWorldPosition.x += offsetX;
-            buildingWorldPosition.z += offsetY;
-            building.transform.position = buildingWorldPosition;
-            building.Construct();
-        }
+        return WorldToGridPosition(buildingWorldPosition);
+    }
+
+    private void SetBuildingOnPosition(Building building, Vector2Int gridPosition)
+    {
+        Vector3 buildingWorldPosition = GridToWorldPosition(gridPosition);
+        float offsetX = ((float)(building.size.x - 1) / 2.0f) * 10;
+        float offsetY = ((float)(building.size.y - 1) / 2.0f) * 10;
+        buildingWorldPosition.x += offsetX;
+        buildingWorldPosition.z += offsetY;
+        building.transform.position = buildingWorldPosition;
     }
 
     private void OnDrawGizmos()

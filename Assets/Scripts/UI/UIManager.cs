@@ -39,6 +39,8 @@ public class UIManager : MonoBehaviour
     private void OnGameModeChange(GameMode gameMode)
     {
         buildModePanel.SetActive(gameMode == GameMode.Build);
+        if (buildModePanel.activeSelf)
+            Building.DeselectAll();
     }
 
     private void OnResourceChange(Dictionary<ResourceType, int> amounts)
